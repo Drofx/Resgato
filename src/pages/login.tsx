@@ -11,7 +11,7 @@ import { Form } from '../components/Form.tsx'
 import Button from '../components/button.tsx'
 import { Cat } from 'lucide-react'
 import Content from '../components/content.tsx'
-import Span from '../components/span.tsx'
+import Span from '../components/Span.tsx'
 
 function Login() {
   const [loginLoading, setLoginLoding] = useState(false)
