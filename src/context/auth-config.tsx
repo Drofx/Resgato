@@ -3,7 +3,7 @@ export const config = {
     "/login",
     "/signup"
   ],
-  desactivateAuth:true
+  desactivateAuth:false
 }
 
 export const back:any  = -1
