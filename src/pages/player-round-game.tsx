@@ -21,7 +21,7 @@ function PlayerRoundGame() {
   let { gameId } = useParams();
   const gameService = new GameService()
   const [gameData, setGameData] = useState({
-    id: 9,
+    id: null,
     gameName: null,
     gameConcluded: null,
     answeredRound: null,
@@ -135,7 +135,7 @@ function PlayerRoundGame() {
 
 
   return (
-    <div className='flex flex-col gap-6 '>
+    <div className='flex flex-col gap-6 h-full '>
       <div className='flex gap-3 items-center jus'>
         <div className='rounded-full bg-zinc-200 w-fit p-1'>
           <Link to={'/player-game-list'}>
@@ -145,79 +145,95 @@ function PlayerRoundGame() {
         <h1 className='font-semibold text-lg'>Nome do jogo: </h1>
         <h1 className='text-lg'>Jogo 1</h1>
       </div>
-      <div className='flex items-center h-full justify-center'>
-        <div className='max-w-xs p-6 shadow bg-white rounded'>
-          <div className='flex gap-1'>
-            <h1 className='font-bold text-lg'>Ano: </h1>
-            <h1 className='text-lg'>1</h1>
-          </div>
-          <p className='mb-3 font-bold'>Dados de jogo</p>
-          <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
-            <p>Saldo atual:</p>
-            <div className='p-1 bg-zinc-300 rounded'>{gameData.budgetUser}</div>
-          </div>
-          <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
-            <p>Femeas castradas:</p>
-            <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsFemaleCastrated}</div>
-          </div>
-          <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
-            <p>Femeas não castradas:</p>
-            <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
-          </div>
-          <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
-            <p>Machos castradas:</p>
-            <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
-          </div>
-          <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
-            <p>Machos não castradas:</p>
-            <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMaleCastrated}</div>
-          </div>
-          <p className='mb-3 font-bold'>Rodada</p>
-          <Form variation='default' onSubmit={handleSubmit(handleSendPlay)}>
-            <InputRoot>
-              <Label>Castração Fêmea: UN/300$</Label>
-              <InputText variation='default' {...register('qtdFemaleCastrate')}></InputText>
-              <Span variation='error'>{errors.qtdFemaleCastrate?.message}</Span>
-            </InputRoot>
-            <InputRoot>
-              <Label>Castração Macho: UN/300$</Label>
-              <InputText variation='default' {...register('qtdMaleCastrate')}></InputText>
-              <Span variation='error'>{errors.qtdMaleCastrate?.message}</Span>
-            </InputRoot>
-            <InputRoot>
-              <Label>Construção de abrigos p/ macho: UN/800$</Label>
-              <InputText variation='default' {...register('qtdMaleShelter')}></InputText>
-              <Span variation='error'>{errors.qtdMaleShelter?.message}</Span>
-            </InputRoot>
-            <InputRoot>
-              <Label>Construção de abrigos p/ fêmea: UN/800$</Label>
-              <InputText variation='default' {...register('qtdFamaleShelter')}></InputText>
-              <Span variation='error'>{errors.qtdFamaleShelter?.message}</Span>
-            </InputRoot>
-            <InputRoot>
-              <Label>Dia Castração</Label>
-              <InputText maxLength={2} variation='default' {...register('dateCastration.dayCastrate')}></InputText>
-              <Span variation='error'>{errors.dateCastration?.dayCastrate?.message ?? errors.dateCastration?.message}</Span>
-            </InputRoot>
-            <InputRoot>
-              <Label>Mês da Castração</Label>
-              <InputText maxLength={2} variation='default' {...register('dateCastration.monthCastrate')}></InputText>
-              <Span variation='error'>{errors.dateCastration?.monthCastrate?.message}</Span>
-            </InputRoot>
-            <div className='flex gap-3 items-center justify-between bg-zinc-100 p-1 rounded pl-3'>
-              <p>Custo final: </p>
-              <div className='p-1 bg-zinc-300 rounded'>{
-                (Number(watch("qtdFemaleCastrate")) * 300) +
-                (Number(watch("qtdMaleCastrate")) * 300) +
-                (Number(watch("qtdMaleShelter")) * 800) +
-                (Number(watch("qtdFamaleShelter")) * 800)
-              }</div>
+      {
+        gameData.id != null && (
+          gameData.answeredRound ?
+            <div className='h-full flex items-center justify-center flex-col gap-3 '>
+              <div className='w-fit flex flex-col gap-3'>
+              <div className='bg-red-400 border-red-500 border rounded p-3 text-white font-semibold w-fit'>
+                A proxima rodada ainda não está disponivel
+              </div>
+                <Button onClick={() => navigate(`/game/${gameId}/players-list/my/round`)}>
+                  Ver meus resultados até o momento
+                </Button>
+              </div>
             </div>
-            <Span variation='error'>{errors.teste?.message}</Span>
-            <Button variation='default'>Enviar Jogada</Button>
-          </Form>
-        </div>
-      </div>
+            :
+            <div className='flex items-center h-full justify-center'>
+              <div className='max-w-xs p-6 shadow bg-white rounded'>
+                <div className='flex gap-1'>
+                  <h1 className='font-bold text-lg'>Ano: </h1>
+                  <h1 className='text-lg'>1</h1>
+                </div>
+                <p className='mb-3 font-bold'>Dados de jogo</p>
+                <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
+                  <p>Saldo atual:</p>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.budgetUser}</div>
+                </div>
+                <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
+                  <p>Femeas castradas:</p>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsFemaleCastrated}</div>
+                </div>
+                <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
+                  <p>Femeas não castradas:</p>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
+                </div>
+                <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
+                  <p>Machos castradas:</p>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
+                </div>
+                <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
+                  <p>Machos não castradas:</p>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMaleCastrated}</div>
+                </div>
+                <p className='mb-3 font-bold'>Rodada</p>
+                <Form variation='default' onSubmit={handleSubmit(handleSendPlay)}>
+                  <InputRoot>
+                    <Label>Castração Fêmea: UN/300$</Label>
+                    <InputText variation='default' {...register('qtdFemaleCastrate')}></InputText>
+                    <Span variation='error'>{errors.qtdFemaleCastrate?.message}</Span>
+                  </InputRoot>
+                  <InputRoot>
+                    <Label>Castração Macho: UN/300$</Label>
+                    <InputText variation='default' {...register('qtdMaleCastrate')}></InputText>
+                    <Span variation='error'>{errors.qtdMaleCastrate?.message}</Span>
+                  </InputRoot>
+                  <InputRoot>
+                    <Label>Construção de abrigos p/ macho: UN/800$</Label>
+                    <InputText variation='default' {...register('qtdMaleShelter')}></InputText>
+                    <Span variation='error'>{errors.qtdMaleShelter?.message}</Span>
+                  </InputRoot>
+                  <InputRoot>
+                    <Label>Construção de abrigos p/ fêmea: UN/800$</Label>
+                    <InputText variation='default' {...register('qtdFamaleShelter')}></InputText>
+                    <Span variation='error'>{errors.qtdFamaleShelter?.message}</Span>
+                  </InputRoot>
+                  <InputRoot>
+                    <Label>Dia Castração</Label>
+                    <InputText maxLength={2} variation='default' {...register('dateCastration.dayCastrate')}></InputText>
+                    <Span variation='error'>{errors.dateCastration?.dayCastrate?.message ?? errors.dateCastration?.message}</Span>
+                  </InputRoot>
+                  <InputRoot>
+                    <Label>Mês da Castração</Label>
+                    <InputText maxLength={2} variation='default' {...register('dateCastration.monthCastrate')}></InputText>
+                    <Span variation='error'>{errors.dateCastration?.monthCastrate?.message}</Span>
+                  </InputRoot>
+                  <div className='flex gap-3 items-center justify-between bg-zinc-100 p-1 rounded pl-3'>
+                    <p>Custo final: </p>
+                    <div className='p-1 bg-zinc-300 rounded'>{
+                      (Number(watch("qtdFemaleCastrate")) * 300) +
+                      (Number(watch("qtdMaleCastrate")) * 300) +
+                      (Number(watch("qtdMaleShelter")) * 800) +
+                      (Number(watch("qtdFamaleShelter")) * 800)
+                    }</div>
+                  </div>
+                  <Span variation='error'>{errors.teste?.message}</Span>
+                  <Button variation='default'>Enviar Jogada</Button>
+                </Form>
+              </div>
+            </div>
+        )
+      }
     </div>
   )
 }

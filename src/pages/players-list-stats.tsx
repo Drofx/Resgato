@@ -15,30 +15,14 @@ import { Line } from 'react-chartjs-2'
 function PlayersListStats() {
   const { playerId, gameId } = useParams()
   const [playerData, setPlayerData] = useState({
-    // rounds: [
-    //   {
-    //     roundNumber: 0,
-    //     deadLine: null,
-    //     qtdMaleCastrate: null,
-    //     qtdFemaleCastrate: null,
-    //     dateCastration: null,
-    //     qtdMaleShelter: null,
-    //     qtdFamaleShelter: null,
-    //     resultRound: {
-    //       totalPopulation: null,
-    //       totalPopulationCastrated: null,
-    //       totalPopulationFemaleCastrated: null,
-    //       totalPopulationMaleCastrated: null
-    //     }
-    //   },
-    // ]
+    rounds: [],
+    name:"not found"
   })
 
   useEffect(() => {
     if (playerId == "my") {
       gameService.getMyResults(gameId).then(e => {
-        console.log(e)
-        setPlayerData(e)
+        setPlayerData(e[0])
       })
     }
     else {
@@ -60,61 +44,66 @@ function PlayersListStats() {
       </div>
       <div className='w-full flex items-center flex-col gap-6'>
         {
-          playerData.rounds?.map(e =>
-            <>
-              <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
-                <Form variation='default' onSubmit={() => { }}>
-                  <h1 className='font-semibold'>Ano {e.roundNumber} - Escolhas</h1>
-                  <InputRoot>
-                    <Label>Castração </Label>
-                    <InputText value={Number(e.qtdFemaleCastrate)+Number(e.qtdMaleCastrate)} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>Castração Macho</Label>
-                    <InputText value={e.qtdMaleCastrate} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>Castração Fêmea</Label>
-                    <InputText value={e.qtdFemaleCastrate} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>Data da Castração</Label>
-                    <InputText value={new Date(e.dateCastration).getDay().toString().padStart(2,"0")+"/"+new Date(e.dateCastration).getMonth().toString().padStart(2,"0")} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>Construção de abrigos p/ macho - Quantidade</Label>
-                    <InputText value={e.qtdMaleCastrate} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>Construção de abrigos p/ fêmea - Quantidade</Label>
-                    <InputText value={e.qtdFamaleShelter} variation='default'></InputText>
-                  </InputRoot>
-                </Form>
-              </div>
-              <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
-                <Form variation='default' onSubmit={() => { }}>
-                  <h1 className='font-semibold'>Ano {e.roundNumber} - Resultados</h1>
-                  <InputRoot>
-                  <Line data={charts}></Line>
-                    <Label>População total</Label>
-                    <InputText value={e.resultRound.totalPopulation} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>População total de castrados</Label>
-                    <InputText value={e.resultRound.totalPopulationCastrated} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>População de machos castrados</Label>
-                    <InputText value={e.resultRound.totalPopulationMaleCastrated} variation='default'></InputText>
-                  </InputRoot>
-                  <InputRoot>
-                    <Label>População de fêmeas castrados</Label>
-                    <InputText value={e.resultRound.totalPopulationFemaleCastrated} variation='default'></InputText>
-                  </InputRoot>
-                </Form>
-              </div>
-            </>
-          )??"Nenhum jogo encontrado até o momento"
+          playerData.name != "not found" && (
+          playerData.rounds.length == 0 ?
+            "Nenhum jogo encontrado até o momento"
+            :
+            playerData.rounds?.map(e =>
+              <>
+                <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
+                  <Form variation='default' onSubmit={() => { }}>
+                    <h1 className='font-semibold'>Ano {e.roundNumber} - Escolhas</h1>
+                    <InputRoot>
+                      <Label>Castração </Label>
+                      <InputText value={Number(e.qtdFemaleCastrate) + Number(e.qtdMaleCastrate)} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>Castração Macho</Label>
+                      <InputText value={e.qtdMaleCastrate} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>Castração Fêmea</Label>
+                      <InputText value={e.qtdFemaleCastrate} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>Data da Castração</Label>
+                      <InputText value={new Date(e.dateCastration).getDay().toString().padStart(2, "0") + "/" + new Date(e.dateCastration).getMonth().toString().padStart(2, "0")} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>Construção de abrigos p/ macho - Quantidade</Label>
+                      <InputText value={e.qtdMaleCastrate} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>Construção de abrigos p/ fêmea - Quantidade</Label>
+                      <InputText value={e.qtdFamaleShelter} variation='default'></InputText>
+                    </InputRoot>
+                  </Form>
+                </div>
+                <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
+                  <Form variation='default' onSubmit={() => { }}>
+                    <h1 className='font-semibold'>Ano {e.roundNumber} - Resultados</h1>
+                    <InputRoot>
+                      <Line data={charts}></Line>
+                      <Label>População total</Label>
+                      <InputText value={e.resultRound.totalPopulation} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>População total de castrados</Label>
+                      <InputText value={e.resultRound.totalPopulationCastrated} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>População de machos castrados</Label>
+                      <InputText value={e.resultRound.totalPopulationMaleCastrated} variation='default'></InputText>
+                    </InputRoot>
+                    <InputRoot>
+                      <Label>População de fêmeas castrados</Label>
+                      <InputText value={e.resultRound.totalPopulationFemaleCastrated} variation='default'></InputText>
+                    </InputRoot>
+                  </Form>
+                </div>
+              </>
+            ) ?? "Nenhum jogo encontrado até o momento"
+          )
         }
       </div>
     </div>
