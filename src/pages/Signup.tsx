@@ -7,7 +7,7 @@ import InputRoot from '../components/input-root'
 import InputText from '../components/input-text'
 import Label from '../components/label'
 import Span from '../components/span'
-import { Form } from '../components/form'
+import { Form } from '../components/Form'
 import Button from '../components/button'
 import { Link, useNavigate } from 'react-router-dom';
 import { number } from '../utils/extensions/zod';

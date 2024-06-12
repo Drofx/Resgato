@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from '../components/form'
+import { Form } from '../components/Form'
 import InputRoot from '../components/input-root'
 import Label from '../components/label'
 import InputText from '../components/input-text'
