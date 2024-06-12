@@ -180,31 +180,31 @@ function PlayerRoundGame() {
                 </div>
                 <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
                   <p>Machos castradas:</p>
-                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMaleCastrated}</div>
                 </div>
                 <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
                   <p>Machos não castradas:</p>
-                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMaleCastrated}</div>
+                  <div className='p-1 bg-zinc-300 rounded'>{gameData.totalCatsMale}</div>
                 </div>
                 <p className='mb-3 font-bold'>Rodada</p>
                 <Form variation='default' onSubmit={handleSubmit(handleSendPlay)}>
                   <InputRoot>
-                    <Label>Castração Fêmea: UN/300$</Label>
+                    <Label>Castração Fêmea: UN/50$</Label>
                     <InputText variation='default' {...register('qtdFemaleCastrate')}></InputText>
                     <Span variation='error'>{errors.qtdFemaleCastrate?.message}</Span>
                   </InputRoot>
                   <InputRoot>
-                    <Label>Castração Macho: UN/300$</Label>
+                    <Label>Castração Macho: UN/100$</Label>
                     <InputText variation='default' {...register('qtdMaleCastrate')}></InputText>
                     <Span variation='error'>{errors.qtdMaleCastrate?.message}</Span>
                   </InputRoot>
                   <InputRoot>
-                    <Label>Construção de abrigos p/ macho: UN/800$</Label>
+                    <Label>Construção de abrigos p/ macho: UN/850$</Label>
                     <InputText variation='default' {...register('qtdMaleShelter')}></InputText>
                     <Span variation='error'>{errors.qtdMaleShelter?.message}</Span>
                   </InputRoot>
                   <InputRoot>
-                    <Label>Construção de abrigos p/ fêmea: UN/800$</Label>
+                    <Label>Construção de abrigos p/ fêmea: UN/900$</Label>
                     <InputText variation='default' {...register('qtdFamaleShelter')}></InputText>
                     <Span variation='error'>{errors.qtdFamaleShelter?.message}</Span>
                   </InputRoot>
@@ -221,10 +221,10 @@ function PlayerRoundGame() {
                   <div className='flex gap-3 items-center justify-between bg-zinc-100 p-1 rounded pl-3'>
                     <p>Custo final: </p>
                     <div className='p-1 bg-zinc-300 rounded'>{
-                      (Number(watch("qtdFemaleCastrate")) * 300) +
-                      (Number(watch("qtdMaleCastrate")) * 300) +
-                      (Number(watch("qtdMaleShelter")) * 800) +
-                      (Number(watch("qtdFamaleShelter")) * 800)
+                      (Number(watch("qtdFemaleCastrate"))??0 * 100) +
+                      (Number(watch("qtdMaleCastrate"))??0 * 50) +
+                      (Number(watch("qtdMaleShelter"))??0 * 850) +
+                      (Number(watch("qtdFamaleShelter"))??0 * 900)
                     }</div>
                   </div>
                   <Span variation='error'>{errors.teste?.message}</Span>

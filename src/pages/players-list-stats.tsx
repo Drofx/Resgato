@@ -44,11 +44,8 @@ function PlayersListStats() {
       </div>
       <div className='w-full flex items-center flex-col gap-6'>
         {
-          playerData.name != "not found" && (
-          playerData.rounds.length == 0 ?
-            "Nenhum jogo encontrado até o momento"
-            :
-            playerData.rounds?.map(e =>
+          playerData?.name != "not found" && playerData?.rounds.length > 0 ?
+            playerData?.rounds?.map(e =>
               <>
                 <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
                   <Form variation='default' onSubmit={() => { }}>
@@ -102,9 +99,8 @@ function PlayersListStats() {
                   </Form>
                 </div>
               </>
-            ) ?? "Nenhum jogo encontrado até o momento"
-          )
-        }
+            ) : "Nenhum jogo encontrado até o momento"
+          } 
       </div>
     </div>
   )

@@ -73,10 +73,10 @@ function PlayerRoundStats() {
 
   function nextRound() {
     if (Number(round) + 1 < 4) {
-      navigate('/game/9/player-round-game')
+      navigate(`/game/${gameId}/player-round-game`)
     }
     else {
-      navigate('/game/9/players-list')
+      navigate(`/game/${gameId}/players-list`)
     }
   }
 
