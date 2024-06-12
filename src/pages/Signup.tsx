@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignupService } from '../services/signup-service';
-import InputRoot from '../components/input-root'
-import InputText from '../components/input-text'
-import Label from '../components/label'
-import Span from '../components/span'
-import { Form } from '../components/Form'
-import Button from '../components/button'
+import { SignupService } from '../services/signup-service.tsx';
+import InputRoot from '../components/input-root.tsx'
+import InputText from '../components/input-text.tsx'
+import Label from '../components/label.tsx'
+import Span from '../components/Span.tsx'
+import { Form } from '../components/Form.tsx'
+import Button from '../components/Button.tsx'
 import { Link, useNavigate } from 'react-router-dom';
 import { number } from '../utils/extensions/zod';
-import Content from '../components/content';
+import Content from '../components/content.tsx';
 
 
 function Signup() {
