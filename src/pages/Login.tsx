@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 import InputRoot from '../components/input-root'
 import InputText from '../components/input-text'
 import Label from '../components/label'
-import Span from '../components/span'
 import { Form } from '../components/form'
 import Button from '../components/button'
 import { Cat } from 'lucide-react'
 import Content from '../components/content'
+import Span from '../components/span.tsx'
 
 function Login() {
   const [loginLoading, setLoginLoding] = useState(false)
