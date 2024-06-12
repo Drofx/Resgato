@@ -53,6 +53,7 @@ export class GameService extends BaseService {
         .catch((error) => {
             throw error
         })
+
         return result
     }
 
@@ -64,6 +65,33 @@ export class GameService extends BaseService {
         .catch((error) => {
             throw error
         })
+
+        return result
+    }
+
+    public getMyResults(id) {
+        const result = this.axios.get(`${this.api}/get-answers?id=${id}`,this.axiosConfig)
+        .then(response => {
+            return response.data
+        })
+        .catch((error) => {
+            throw error
+        })
+        
+        return result
+    }
+
+    public getPlayerRoundsResults(id, playerId) {
+        const result = this.axios.get(`${this.api}/get-answers-by-id?gameId=${id}&userId=${playerId}`,this.axiosConfig)
+        .then(response => {
+            return response.data
+        })
+        .catch((error) => {
+            throw error
+        })
+        
         return result
     }
 }
+
+export const gameService = new GameService() 

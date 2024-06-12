@@ -51,6 +51,7 @@ function AdminRouters() {
                         <Route path="/game/:gameId/player-rounds-list" element={<PlayerRoundsList />} />
                         <Route path="/game/:gameId/players-list" element={<PlayersList />} />
                         <Route path="/game/:gameId/players-list/round" element={<PlayersListStats />} />
+                        <Route path="/game/:gameId/players-list/:playerId/round" element={<PlayersListStats />} />
                         <Route path="/game/:gameId/player-round-chart-result" element={<PlayerRoundChartResult />} />
                     </Routes>
                 </div>

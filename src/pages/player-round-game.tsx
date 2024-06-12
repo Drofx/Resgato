@@ -34,8 +34,8 @@ function PlayerRoundGame() {
     totalStudent: null
   })
   const formSchema = z.object({
-    qtdMaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e=>Number(e)<=gameData.totalCatsFemale,"A quantidade de femeas para castração precisa ser menor do que a população não castrada"),
-    qtdFemaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e=>Number(e)<=gameData.totalCatsMale,"A quantidade de machos para castração precisa ser menor do que a população não castrada"),
+    qtdMaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e => Number(e) <= gameData.totalCatsFemale, "A quantidade de femeas para castração precisa ser menor do que a população não castrada"),
+    qtdFemaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e => Number(e) <= gameData.totalCatsMale, "A quantidade de machos para castração precisa ser menor do que a população não castrada"),
     dateCastration: z.object({
       monthCastrate: z.string()
         .nonempty("Campo Obrigatório")
@@ -56,19 +56,19 @@ function PlayerRoundGame() {
     qtdMaleShelter: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros"),
     qtdFamaleShelter: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros"),
   }).superRefine((e, ctx) => {
-    if(gameData.budgetUser??0<
+    if (gameData.budgetUser ?? 0 <
       (Number(watch("qtdFemaleCastrate")) * 300) +
       (Number(watch("qtdMaleCastrate")) * 300) +
       (Number(watch("qtdMaleShelter")) * 800) +
-      (Number(watch("qtdFamaleShelter")) * 800)){
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["teste"],
-          message: "Quantidade de dinheiro não permitida",
-        });
+      (Number(watch("qtdFamaleShelter")) * 800)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["teste"],
+        message: "Quantidade de dinheiro não permitida",
+      });
     }
   })
-  
+
   const { handleSubmit, formState: { errors }, register, setValue, watch } = useForm<z.infer<typeof formSchema>>(
     {
       resolver: zodResolver(formSchema),
@@ -102,10 +102,15 @@ function PlayerRoundGame() {
             <MoveLeft className='w-5 h-5' />
           </Link>
         </div>
-        <h1 className='font-semibold text-lg'>Ano 1</h1>
+        <h1 className='font-semibold text-lg'>Nome do jogo: </h1>
+        <h1 className='text-lg'>Jogo 1</h1>
       </div>
       <div className='flex items-center h-full justify-center'>
         <div className='max-w-xs p-6 shadow bg-white rounded'>
+          <div className='flex gap-1'>
+            <h1 className='font-bold text-lg'>Ano: </h1>
+            <h1 className='text-lg'>1</h1>
+          </div>
           <p className='mb-3 font-bold'>Dados de jogo</p>
           <div className='flex gap-3 items-center mb-6 justify-between bg-zinc-100 p-1 rounded pl-3'>
             <p>Saldo atual:</p>

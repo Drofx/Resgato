@@ -10,7 +10,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { MoveLeft } from 'lucide-react'
 import { GameService } from '../services/game-service'
 
-
 function PlayersList() {
   const navigate = useNavigate()
   const gameService = new GameService()
@@ -57,7 +56,7 @@ function PlayersList() {
               </TableCell>
               <TableCell variation='body' >
                 <Button>
-                  <Link className='flex-1' to={'round'}>Ver resultados</Link>
+                  <Link className='flex-1' to={`/game/${gameId}/players-list/${e.id}/round`}>Ver resultados</Link>
                 </Button>
               </TableCell>
             </TableRow>

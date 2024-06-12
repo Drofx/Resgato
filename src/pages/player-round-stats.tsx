@@ -13,11 +13,11 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';  
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
-  LinearScale,  
+  LinearScale,
   PointElement,
   LineElement,
   Tooltip,
@@ -28,7 +28,7 @@ function PlayerRoundStats() {
   const { round, gameId } = useParams()
   const navigate = useNavigate()
   const gameService = new GameService()
-  const [gameData,setGameData] = useState({
+  const [gameData, setGameData] = useState({
     roundNumber: null,
     deadLine: null,
     qtdMaleCastrate: null,
@@ -52,7 +52,7 @@ function PlayerRoundStats() {
     }
     return data;
   }
-  
+
   const charts = {
     labels: Array.from({ length: 365 }, (_, i) => ""),
     datasets: [
@@ -69,20 +69,20 @@ function PlayerRoundStats() {
         backgroundColor: 'rgb(138,43,226)',
       },
     ],
-  };  
+  };
 
   function nextRound() {
-    if(Number(round)+1<4){
+    if (Number(round) + 1 < 4) {
       navigate('/game/9/player-round-game')
     }
-    else{
+    else {
       navigate('/game/9/players-list')
     }
   }
 
   useEffect(() => {
-    gameService.getAnswers(gameId).then((e:any[]) => {
-      setGameData(e.filter(e=>e.roundNumber == round)[0])
+    gameService.getAnswers(gameId).then((e: any[]) => {
+      setGameData(e.filter(e => e.roundNumber == round)[0])
     })
   }, [])
 
@@ -94,10 +94,15 @@ function PlayerRoundStats() {
             <MoveLeft className='w-5 h-5' />
           </Link>
         </div>
-        <h1 className='font-semibold text-lg'>Ano 1</h1>
+        <h1 className='font-semibold text-lg'>Nome do jogo: </h1>
+        <h1 className='text-lg'>Jogo 1</h1>
       </div>
       <div className='h-full w-full flex items-center justify-center'>
         <div className='flex gap-3 flex-col w-96 first-letter:h-86 items-center bg-white p-6 rounded shadow-lg'>
+          <div className='flex gap-1'>
+            <h1 className='font-bold text-lg'>Ano: </h1>
+            <h1 className='text-lg'>1</h1>
+          </div>
           <Line data={charts}></Line>
           <Button onClick={nextRound}>
             <Link className='flex-1' to='/player-round-game'>Ir para proxima rodada</Link>

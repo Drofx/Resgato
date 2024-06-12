@@ -37,7 +37,8 @@ function PlayerGamesList() {
                 </div>
               </div>
               <Button onClick={() => navigate(`/game/${e.id}/player-round-game`)}>Entrar no jogo</Button>
-              <Button onClick={() => navigate(`/game/${e.id}/players-list?id=${e.id}`)}>Ver placar de jogadores</Button>
+              <Button onClick={() => navigate(`/game/${e.id}/players-list`)}>Ver placar de jogadores</Button>
+              <Button onClick={() => navigate(`/game/${e.id}/players-list/my/round`)}>Ver meus resultados</Button>
             </div>
           )
         }
