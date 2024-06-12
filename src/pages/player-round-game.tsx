@@ -34,41 +34,81 @@ function PlayerRoundGame() {
     totalStudent: null
   })
   const formSchema = z.object({
-    qtdMaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e => Number(e) <= gameData.totalCatsFemale, "A quantidade de femeas para castração precisa ser menor do que a população não castrada"),
-    qtdFemaleCastrate: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros").refine(e => Number(e) <= gameData.totalCatsMale, "A quantidade de machos para castração precisa ser menor do que a população não castrada"),
+    qtdMaleCastrate: z.string()
+      .nonempty("Campo Obrigatório")
+      .refine(e =>
+        number(e),
+        "Apenas numeros"
+      )
+      .refine(e =>
+        Number(e) <= gameData.totalCatsFemale,
+        "A quantidade de femeas para castração precisa ser menor do que a população não castrada"
+      ),
+    qtdFemaleCastrate: z.string()
+      .nonempty("Campo Obrigatório")
+      .refine(e =>
+        number(e),
+        "Apenas numeros"
+      )
+      .refine(e =>
+        Number(e) <= gameData.totalCatsMale,
+        "A quantidade de machos para castração precisa ser menor do que a população não castrada"
+      ),
     dateCastration: z.object({
       monthCastrate: z.string()
         .nonempty("Campo Obrigatório")
-        .refine(e => number(e), "Apenas numeros")
-        .refine(e => Number(e) < 13, "O mês tem que ser menor que 12"),
+        .refine(e =>
+          number(e),
+          "Apenas numeros"
+        )
+        .refine(e =>
+          Number(e) < 13,
+          "O mês tem que ser menor que 12"
+        ),
       dayCastrate: z.string()
         .nonempty("Campo Obrigatório")
-        .refine(e => number(e), "Apenas numeros"),
-    }).superRefine((e, ctx) => {
-      if (!dateValidator(`${e.dayCastrate}-${e.monthCastrate}-0000`)) {
+        .refine(e =>
+          number(e),
+          "Apenas numeros"
+        ),
+    })
+      .superRefine((e, ctx) => {
+        if (!dateValidator(`${e.dayCastrate}-${e.monthCastrate}-0000`)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["dayCastrate"],
+            message: "Dia invalido",
+          });
+        }
+      }),
+    qtdMaleShelter: z.string()
+      .nonempty("Campo Obrigatório")
+      .refine(e =>
+        number(e),
+        "Apenas numeros"
+      ),
+    qtdFamaleShelter: z.string()
+      .nonempty("Campo Obrigatório")
+      .refine(e =>
+        number(e),
+        "Apenas numeros"
+      ),
+
+  })
+    .superRefine((e, ctx) => {
+      console.log(gameData.budgetUser)
+      if (Number(gameData.budgetUser) <
+        (Number(watch("qtdFemaleCastrate")) * 300) +
+        (Number(watch("qtdMaleCastrate")) * 300) +
+        (Number(watch("qtdMaleShelter")) * 800) +
+        (Number(watch("qtdFamaleShelter")) * 800)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["dayCastrate"],
-          message: "Dia invalido",
+          path: ["teste"],
+          message: "Quantidade de dinheiro não permitida",
         });
       }
-    }),
-    qtdMaleShelter: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros"),
-    qtdFamaleShelter: z.string().nonempty("Campo Obrigatório").refine(e => number(e), "Apenas numeros"),
-  }).superRefine((e, ctx) => {
-    if (gameData.budgetUser ?? 0 <
-      (Number(watch("qtdFemaleCastrate")) * 300) +
-      (Number(watch("qtdMaleCastrate")) * 300) +
-      (Number(watch("qtdMaleShelter")) * 800) +
-      (Number(watch("qtdFamaleShelter")) * 800)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["teste"],
-        message: "Quantidade de dinheiro não permitida",
-      });
-    }
-  })
-
+    })
   const { handleSubmit, formState: { errors }, register, setValue, watch } = useForm<z.infer<typeof formSchema>>(
     {
       resolver: zodResolver(formSchema),

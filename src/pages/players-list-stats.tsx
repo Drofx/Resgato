@@ -15,28 +15,29 @@ import { Line } from 'react-chartjs-2'
 function PlayersListStats() {
   const { playerId, gameId } = useParams()
   const [playerData, setPlayerData] = useState({
-    rounds: [
-      {
-        roundNumber: 0,
-        deadLine: null,
-        qtdMaleCastrate: null,
-        qtdFemaleCastrate: null,
-        dateCastration: null,
-        qtdMaleShelter: null,
-        qtdFamaleShelter: null,
-        resultRound: {
-          totalPopulation: null,
-          totalPopulationCastrated: null,
-          totalPopulationFemaleCastrated: null,
-          totalPopulationMaleCastrated: null
-        }
-      },
-    ]
+    // rounds: [
+    //   {
+    //     roundNumber: 0,
+    //     deadLine: null,
+    //     qtdMaleCastrate: null,
+    //     qtdFemaleCastrate: null,
+    //     dateCastration: null,
+    //     qtdMaleShelter: null,
+    //     qtdFamaleShelter: null,
+    //     resultRound: {
+    //       totalPopulation: null,
+    //       totalPopulationCastrated: null,
+    //       totalPopulationFemaleCastrated: null,
+    //       totalPopulationMaleCastrated: null
+    //     }
+    //   },
+    // ]
   })
 
   useEffect(() => {
     if (playerId == "my") {
       gameService.getMyResults(gameId).then(e => {
+        console.log(e)
         setPlayerData(e)
       })
     }
@@ -59,7 +60,7 @@ function PlayersListStats() {
       </div>
       <div className='w-full flex items-center flex-col gap-6'>
         {
-          playerData.rounds.map(e =>
+          playerData.rounds?.map(e =>
             <>
               <div className='flex flex-col w-96 first-letter:h-86 items-center bg-white p-9 rounded shadow-lg'>
                 <Form variation='default' onSubmit={() => { }}>
@@ -113,7 +114,7 @@ function PlayersListStats() {
                 </Form>
               </div>
             </>
-          )
+          )??"Nenhum jogo encontrado até o momento"
         }
       </div>
     </div>
