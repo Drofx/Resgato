@@ -6,9 +6,9 @@ import { SignupService } from '../services/signup-service.tsx';
 import InputRoot from '../components/input-root.tsx'
 import InputText from '../components/input-text.tsx'
 import Label from '../components/label.tsx'
-import Span from '../components/Span.tsx'
-import { Form } from '../components/Form.tsx'
-import Button from '../components/Button.tsx'
+import Span from '../components/span.tsx'
+import { Form } from '../components/form.tsx'
+import Button from '../components/button.tsx'
 import { Link, useNavigate } from 'react-router-dom';
 import { number } from '../utils/extensions/zod';
 import Content from '../components/content.tsx';
